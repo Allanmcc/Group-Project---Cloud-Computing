@@ -17,7 +17,7 @@
             <label for="email">Email: </label><input type="text" ng-model="user.username" name="email" />
             <label for="passw">Password: </label><input type="text" ng-model="user.password" name="password"/>
             <div style="text-align:center;">
-                <!--<input type="button" ng-click="register()" class="register_button" value="Register" />-->
+                <input type="submit" ng-click="register()" class="register_button" value="Register" />
                 <input type="submit" class="login_button" ng-click="login(user)" value="Login" />
             </div>
         </ul>
@@ -132,11 +132,9 @@
     $scope.master = {};
 
     $scope.login = function(user) {
-        $scope.master = angular.copy(user);
     };
 
     $scope.register = function() {
-        $scope.user = angular.copy($scope.master);
     };
 
     $scope.reset();
