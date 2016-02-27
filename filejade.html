@@ -14,9 +14,11 @@
 <div ng-controller="LoginController">
   <form novalidate class="simple-form" action="/upload" method="POST" enctype="multipart/form-data">
       <ul>
-          <input type="file" name="filefield" class="file_button"></br>
+<a href="localhost:8000">save.png</a>
           <div style="text-align:center;">
-    <input type="submit" class="upload_button" value="Upload" />
+    <input type="submit" class="download_button" value="Download" />
+                  <input type="submit" class="share_button" value="Share" />
+                  <input type="submit" class="back_button" value="Back" />
               </div>
       </ul>
   </form>
@@ -67,13 +69,12 @@ form {
     left: 25%;
     left: 25%;
   width: 660px;
-  height: 120px;
+  height: 100px;
   font-family: Tahoma, Geneva, sans-serif;
   font-size: 20px;
   line-height: 36px;
   font-weight: bold;
   color: #FFF;
-    padding: 20px;
   text-decoration: none;
     text-align: center;
   border-radius: 10px;
@@ -83,7 +84,7 @@ form {
   -moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
 }
-.upload_button {
+.download_button {
 	background: #25A6E1;
 	background: -moz-linear-gradient(top,#25A6E1 0%,#188BC0 100%);
 	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#25A6E1),color-stop(100%,#188BC0));
@@ -103,7 +104,27 @@ form {
 	-webkit-border-radius:4px;
 	border:1px solid #1A87B9
 }  
-.file_button {
+.share_button {
+	background: #25A6E1;
+	background: -moz-linear-gradient(top,#25A6E1 0%,#188BC0 100%);
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#25A6E1),color-stop(100%,#188BC0));
+	background: -webkit-linear-gradient(top,#25A6E1 0%,#188BC0 100%);
+	background: -o-linear-gradient(top,#25A6E1 0%,#188BC0 100%);
+	background: -ms-linear-gradient(top,#25A6E1 0%,#188BC0 100%);
+	background: linear-gradient(top,#25A6E1 0%,#188BC0 100%);
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#25A6E1',endColorstr='#188BC0',GradientType=0);
+    margin: 10 auto;
+	padding:8px 13px;
+	color:#fff;
+	font-family:'Helvetica Neue',sans-serif;
+	font-size:17px;
+    font-weight: bold;
+	border-radius:4px;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	border:1px solid #1A87B9
+}  
+.back_button {
 	background: #25A6E1;
 	background: -moz-linear-gradient(top,#25A6E1 0%,#188BC0 100%);
 	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#25A6E1),color-stop(100%,#188BC0));
