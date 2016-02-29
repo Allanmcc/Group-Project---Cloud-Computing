@@ -1,6 +1,6 @@
 doctype html
 html
-	head
+	head(align="center")
 		title=title
 		link(rel='stylesheet', href='/stylesheets/style.css')
 		script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js")
@@ -9,5 +9,13 @@ html
 		
 		script(src="./progress.js")
 		script(src="/javascripts/controller.js")
+
+		#banner
+			#banner-content
+				p SecureMe
+		
+		div(align="center")
+			img(src="./mainCloudComputing.png" align="middle")
 	body
-		block content
+		.main
+			block content

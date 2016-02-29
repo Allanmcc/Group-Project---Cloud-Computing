@@ -4,30 +4,36 @@ block content
 	head
 		script(src="./progress.js")
 		script(src="./radioHide.js")
-	h1= id
-	ul
-		each file, i in files
-			li
-				a(href='/file?f='+file.file_name) #{file.file_name}
-	h2 Upload File:
-	form(name="form", action="/upload", method="POST", enctype="multipart/form-data")
+
+	div
+        
+		form(name="form", action="/upload", method="POST", enctype="multipart/form-data")
+		h1 Files:
+		ul
+			each file, i in files
+				li
+					a(href='/file?f='+file.file_name) #{file.file_name}
+		h2 Upload File:
 	
-		div.input
-			input(type="radio", name="radio", value="yes", checked="checked") 
-			a Automatically Generate Key
-		div.input
-			input(type="radio", name="radio", value="no") 
-			a Provide Key
-		div#key.input
-			input(type="text", name="key")
+			style
+				include ./userstyle.css
 
-		div.input
-			input(type="file", name="file")
+			div.input
+				input(type="radio", name="radio", value="yes", checked="checked") 
+				a Automatically Generate Key
 
-		div.actions
-			input(type="submit")
+			div.input
+				input(type="radio", name="radio", value="no") 
+				a Provide Key  
+				input(type="text", name="key")
+
+			div.input
+				input(type="file", name="file", class="file_button")
+
+			div.actions
+				input(type="submit", class="submit_button")
 			
-	p Percent Complete:
-	span(id="status") 0
+		p Percent Complete:
+		span(id="status") 0
 	
 
