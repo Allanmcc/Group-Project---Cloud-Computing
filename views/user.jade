@@ -7,13 +7,13 @@ block content
 
 	div
         
-		form(name="form", action="/upload", method="POST", enctype="multipart/form-data")
 		h1 Files:
 		ul
 			each file, i in files
 				li
 					a(href='/file?f='+file.file_name) #{file.file_name}
 		h2 Upload File:
+		form(name="form", action="/upload", method="POST", enctype="multipart/form-data")
 	
 			style
 				include ./userstyle.css
@@ -28,7 +28,7 @@ block content
 				input(type="text", name="key")
 
 			div.input
-				input(type="file", name="file", class="file_button")
+				input(type="file", name="file")
 
 			div.actions
 				input(type="submit", class="submit_button")
