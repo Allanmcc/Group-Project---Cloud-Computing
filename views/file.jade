@@ -1,13 +1,17 @@
 extends layout
 
 block content
-	h1= file_name
-	
-	form(name="form", action="/download?f="+file_name, method="POST")
-		if (gen == 'f')
-				p Key
-				input(type="text", name="key")
-		div.actions
-			input(type="submit", value="Download")
-	
+	style
+		include filestyle.css
+	head
 
+	div
+	
+		h1= file_name
+	
+		form(name="form", action="/download?f="+file_name, method="POST")
+			if (gen == 'f')
+					p Key
+					input(type="text", name="key")
+			div.actions
+				input(type="submit", value="Download", class="submit_button")
