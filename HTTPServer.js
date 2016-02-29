@@ -25,14 +25,7 @@ AWS.config.update({
 
 var dynamodb = new AWS.DynamoDB();
 
-var dummy = {
-	1: {name: 'lol',
-		email: 'lol@lol'
-	},
-	2: {name: 'lol2',
-		email: 'lol2@lol'
-	}
-};
+
 //Lets define a port we want to listen to
 const PORT=8080; 
 app.use(cookieParser());
@@ -66,6 +59,34 @@ app.get("/get", function(req,res) {
     });
 });
 
+
+
+app.post("/download_raw", function(req,res){
+	var f = req.query.f;
+	if (f == '' || f == undefined){
+		res.redirect('./user');
+		return;
+	}
+	var token = req.cookies.login_token;
+	if (!token){
+		res.redirect('/user');
+	}
+	
+	else{
+		jwt.verify(token, app.get('secret'), function(err, decoded){
+			if (err){
+				console.log(err);
+				res.clearCookie('login_token');
+				return res.redirect('./login');
+			}
+			else{
+				var id = decoded
+				res.setHeader('Content-disposition', 'attachment; filename=' + f);
+				fs.createReadStream("./upload/"+id+'/'+f).pipe(res);
+			}
+		});
+	}
+});
 app.post("/download", function(req,res){
 	var f = req.query.f;
 	console.log("f: "+f);
@@ -384,7 +405,24 @@ app.post('/getfile', function(req, res){
 	fs.createReadStream("./upload/"+filename).pipe(decrypt).pipe(res);
 });
 
-
+app.get('/upload_file', function(req,res){
+	var token = req.body.token || req.query.token || req.headers['x-access-token'] || req.cookies.login_token;
+	if (token){
+		jwt.verify(token, app.get('secret'), function(err, decoded){
+			if (err){
+				console.log(err);
+				res.clearCookie('login_token');
+				return res.redirect('./login');
+			}
+			else{
+			res.render('upload_file2.jade');
+			}
+		});
+	}
+	else{
+		res.redirect('./login');
+	}
+});
 app.get('/user', function(req,res){
 	var token = req.body.token || req.query.token || req.headers['x-access-token'] || req.cookies.login_token;
 	
@@ -422,7 +460,6 @@ app.get('/user', function(req,res){
 						});
 
 						
-						console.log(files);
 						res.render('user.jade', {
 							id: decoded,
 							files: files
@@ -502,7 +539,6 @@ app.post('/login_request', function(req,res){
 			res.end("internal error");
 		}
 		else{
-			console.log(data);
 			if (typeof(data.Item) == "undefined"){
 				res.end("Account Not Found");
 			}
@@ -512,7 +548,7 @@ app.post('/login_request', function(req,res){
 				var userParams = {
 					TableName: userTable,
 					AttributesToGet: [
-						"password"
+						"password", "salt"
 					],
 					Key: {
 						"user_id" : {"N": id}
@@ -526,16 +562,20 @@ app.post('/login_request', function(req,res){
 						res.end("internal error");
 					}
 					else{
-						console.log(data2);
 						if (typeof(data2.Item) == "undefined"){
 							res.end("internal error: no user_id in UserTable");
 						}
 						else{
-							password = data2.Item.password.S;
-								
+						
+							
+							var salt=data2.Item.salt.S;
+
+							var given_hash = crypto.createHash('sha512').update(password_given+salt).digest("base64");
+		
+							var hash = data2.Item.password.S;
 							
 							
-							if (password == password_given){
+							if (given_hash == hash){
 								var token = jwt.sign(id, app.get('secret'),{
 									expiresIn: "24h"
 								});
@@ -630,20 +670,26 @@ app.post('/signup_request', function(req, res){
 		}
 	
 	});
+	
 	function addUser(){
+
 		doc.query(params, function(err, data){
 			if (err){
 				console.error("Error: ", JSON.stringify(err, null, 2));
 			}
 			else{
 				data.Items.forEach(function(item){
+					var salt=crypto.randomBytes(128).toString('base64'); 
+					var pass_to_hash = password+salt;
+					var hash = crypto.createHash('sha512').update(pass_to_hash).digest("base64");
 					var user_id=item.count;
 					var UserParams = {
 						TableName: "UserTable",
 						Item:{
 							"user_id": user_id,
 							"email":email,
-							"password":password
+							"password":hash,
+							"salt":salt
 						}
 					};
 					var EmailParams = {
@@ -654,6 +700,7 @@ app.post('/signup_request', function(req, res){
 						}
 					};
 					doc.put(EmailParams, function(err, data){
+						console.log("lol");
 						if (err){
 							console.log("put email error: ",JSON.stringify(err,null,2));
 						}
@@ -674,6 +721,7 @@ app.post('/signup_request', function(req, res){
 								}
 								else{
 									console.log("count: ",JSON.stringify(data,null,2));
+									res.redirect('/login');
 								}
 								
 							});
@@ -707,8 +755,6 @@ app.post('/signup_request', function(req, res){
 			}
 		});
 		
-
-		res.end(email+":"+password);
 	}
 });
 

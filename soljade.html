@@ -1,3 +1,4 @@
+
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -37,7 +38,6 @@
        margin: 0; 
        padding: 0;
      }
-
      div#banner { 
        position: absolute; 
        top: 0; 
@@ -58,7 +58,7 @@
        padding-top: 70px;
     }
     html {
-    background-image: url('mainCloudComputing.png');
+    background-image: url('./mainCloudComputing.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
@@ -118,17 +118,13 @@ form {
     border-collapse: collapse;
     width: 100%;
 }
-
 #customers td, #customers th {
     border: 1px solid #ddd;
     text-align: left;
     padding: 8px;
 }
-
 #customers tr{background-color: #f2f2f2}
-
 #customers tr:hover {background-color: #ddd;}
-
 #customers th {
     padding-top: 12px;
     padding-bottom: 12px;
@@ -137,13 +133,3 @@ form {
 }
     </style>
 <script>
-var app = angular.module('myApp', ['selectionModel']);
-app.controller('FancyCtrl', function() {
-    this.bag = [
-      {label: 'Monacle', selected: false},
-      {label: 'Top Hat', selected: true},
-      {label: 'Mustachio', selected: false},
-      {label: 'Coffee', selected: false}
-    ];
-  });
-</script>

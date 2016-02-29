@@ -1,3 +1,4 @@
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -11,34 +12,24 @@
         </div>
     </body>
 </html>
-<div>
-    <form class="simple-form1" action="/signup_request" method="post">
+<div ng-controller="LoginController">
+    <form novalidate name="form" class="simple-form" action="/login_request" method="POST">
         <ul>
-            <label for="email">Email: </label><input type="text" name="email" />
-            <label for="passw">Password: </label><input type="text" name="password"/>
+            <label for="email">Email: </label><input type="text" ng-model="user.username" name="email" />
+            <label for="passw">Password: </label><input type="text" ng-model="user.password" name="password"/>
             <div style="text-align:center;">
-                <input type="submit" class="register_button" value="Register" />
+                <input type="submit" ng-click="register()" onclick="form.action='/signup_request'; return true;" class="register_button" value="Register" />
+                <input type="submit" class="login_button" ng-click="login(user)" value="Login" />
             </div>
         </ul>
     </form>
 </div>
-<div>
-    <form class="simple-form2" action="/login_request" method="post">
-        <ul>
-            <label for="email">Email: </label><input type="text" name="email" />
-            <label for="passw">Password: </label><input type="text" name="password"/>
-            <div style="text-align:center;">
-                <input type="submit" class="login_button" value="Login" />
-            </div>
-        </ul>
-    </form>
-</div>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <style type="text/css" media="screen">
      * {
          margin: 0; 
          padding: 0;
      }
-
      div#banner { 
          position: absolute; 
          top: 0; 
@@ -59,14 +50,14 @@
          padding-top: 70px;
      }
      html {
-         background-image: url('/images/mainCloudComputing.png');
+         background-image: url('/mainCloudComputing.png');
          background-size: contain;
          background-repeat: no-repeat;
          background-position: center center;
          font-size: 10pt;
          vertical-align: middle;
      }
-    .simple-form1 {
+    form {
         background: -webkit-linear-gradient(bottom, #CCFFFF, #1C6BA0 175px);
         background: -moz-linear-gradient(bottom, #CCFFFF, #1C6BA0 175px);
         background: linear-gradient(bottom, #CCFFFF, #1C6BA0 175px);
@@ -75,33 +66,6 @@
         margin: auto;
         position: absolute;
         top: 40%;
-        left: 25%;
-        left: 25%;
-        width: 660px;
-        height: 100px;
-        font-family: Tahoma, Geneva, sans-serif;
-        font-size: 20px;
-        line-height: 36px;
-        font-weight: bold;
-        color: #FFF;
-        text-decoration: none;
-        text-align: center;
-        border-radius: 10px;
-        border: 1px solid #999;
-        border: inset 1px solid #333;
-        -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
-        -moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
-        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
-    }
-    .simple-form2 {
-        background: -webkit-linear-gradient(bottom, #CCFFFF, #1C6BA0 175px);
-        background: -moz-linear-gradient(bottom, #CCFFFF, #1C6BA0 175px);
-        background: linear-gradient(bottom, #CCFFFF, #1C6BA0 175px);
-        border: 1px solid #c6c7cc;
-        border-radius: 5px;
-        margin: auto;
-        position: absolute;
-        top: 60%;
         left: 25%;
         left: 25%;
         width: 660px;
@@ -161,3 +125,15 @@
         border:1px solid #1A87B9
     }  
 </style>
+<script>
+    var app = angular.module('formExample', []);
+    
+    app.controller('LoginController', ['$scope', function($scope) {
+    $scope.master = {};
+    $scope.login = function(user) {
+    };
+    $scope.register = function() {
+    };
+    $scope.reset();
+}]);
+</script>
