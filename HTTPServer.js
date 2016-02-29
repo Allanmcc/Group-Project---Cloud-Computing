@@ -60,6 +60,117 @@ app.get("/get", function(req,res) {
 });
 
 
+app.post("/view_raw", function(req,res){
+	var f = req.query.f;
+	if (f == '' || f == undefined){
+		res.redirect('./user');
+		return;
+	}
+	console.log(f)
+	var token = req.cookies.login_token;
+	if (!token){
+		res.redirect('/user');
+	}
+	
+	else{
+		jwt.verify(token, app.get('secret'), function(err, decoded){
+			if (err){
+				console.log(err);
+				res.clearCookie('login_token');
+				return res.redirect('./login');
+			}
+			else{
+				var id = decoded
+				
+				res.setHeader('Content-type', 'text/html; filename=' + f);
+				fs.createReadStream("./upload/"+id+'/'+f).pipe(res);
+			}
+		});
+	}
+});
+
+
+app.post("/view", function(req,res){
+	var f = req.query.f;
+	console.log("f: "+f);
+	if (f == '' || f == undefined){
+		res.redirect('./user');
+		return;
+	}
+	var key = req.body.key;
+	console.log("Key: "+key);
+	var token = req.cookies.login_token;
+	if (!token){
+		res.redirect('/user');
+	}
+	
+	else{
+		
+		jwt.verify(token, app.get('secret'), function(err, decoded){
+			if (err){
+				console.log(err);
+				res.clearCookie('login_token');
+				return res.redirect('./login');
+			}
+			else{
+				
+				id = decoded;
+				var table = 'user_'+id;
+				
+				var userParams = {
+					TableName: table,
+					AttributesToGet: [
+						"gen_key",
+						"secret_key",
+						"hash_check"
+					],
+					Key: {
+						"file_name" : {"S": f}
+
+					}
+				}
+				
+				var hash_check;
+				var doc = new AWS.DynamoDB;
+				doc.getItem(userParams, function(err, data){
+					if (err){
+						console.log(err);
+						res.end("internal error");
+						return;
+					}
+					else{
+						console.log(data);
+						if (typeof(data.Item) == "undefined"){
+							res.redirect('/user');
+							console.log("no file found");
+							return;
+						}
+						else{
+							if (data.Item.gen_key.S == 't'){
+								key = data.Item.secret_key.S;
+							}
+							hash_check = data.Item.hash_check.S
+
+						}
+					}
+					var hash = crypto.createHmac('sha256', key).update(app.get('hashPhrase')).digest('hex');
+					if (hash == hash_check){
+					
+						var decrypt = crypto.createDecipher(algorithm, key);
+						var filename = f;
+						
+						fs.createReadStream("./upload/"+id+'/'+filename).pipe(decrypt).pipe(res);
+					}
+					else{
+						res.end("wrong key");
+					
+					}
+				});
+			}
+		});
+	}	
+});
+
 
 app.post("/download_raw", function(req,res){
 	var f = req.query.f;
@@ -440,7 +551,7 @@ app.get('/user', function(req,res){
 				var files = '';
 				var params = {
 					TableName: 'user_'+id,
-					ProjectionExpression: "secret_key, file_name"
+					ProjectionExpression: "file_name"
 				}
 				doc.scan(params, function(err, data){
 					if (err){
@@ -484,7 +595,7 @@ app.get('/user', function(req,res){
 
 app.get('/logout', function(req,res){
 	res.clearCookie('login_token');
-	res.end("logged out");
+	res.redirect("./user")
 
 });
 
