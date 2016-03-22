@@ -1,0 +1,19 @@
+.container
+	form.form-signin(action="/login_request" method="POST" name="form")
+		h2.form-signin-heading
+			| Login
+		if (error=="true")
+			.alert.alert-danger #{message}
+		if (error=="alert")
+			.alert.alert-success #{message}
+		label.sr-only(for="inputEmail")
+			Email address
+		input.form-control(type="asd" name="email" id="inputEmail" placeholder="Email address" required autofocus)
+		label.sr-only(for="inputPassword")
+			Password
+		input.form-control(type="password" name="password" id="inputPassword" placeholder="Password" required)
+		button.btn.btn-lg.btn-primary(type="submit")
+			| Sign in
+		a  
+		button.btn.btn-lg.btn-primary(type="submit" onclick="form.action='/signup_request'; return true;")
+			| Register

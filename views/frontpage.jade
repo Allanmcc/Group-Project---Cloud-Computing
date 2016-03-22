@@ -1,0 +1,17 @@
+extends layout
+
+block content
+	script(src="./js/dropzone.min.js")
+	link(rel="stylesheet", href="./css/dropzone.min.css")
+	body
+
+		include banner_out
+		
+		
+		include sidebar
+		
+		include signin
+		
+			
+		form.dropzone(action="/file-upload", id="my-awesome-dropzone")
+		

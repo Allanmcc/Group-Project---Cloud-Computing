@@ -11,7 +11,6 @@ block content
 		link(rel="stylesheet", href="./css/dropzone.min.css")
 
 		script.
-
 			Dropzone.autoDiscover = true;
 			Dropzone.options.dropper = {
 				uploadMultiple: false,
@@ -35,19 +34,13 @@ block content
 						
 						$('.progress-bar').css('width', progress+'%').attr('aria-valuenow', progress);
 					});
-					this.on("complete", function (file) {
-							
-						location.href='/file?f='+file.name;
-							
-						
-					});
 				}
 			}
 	include banner_in
 	include sidebar
 
 
-	form.dropzone(action="/upload", id="dropper" method="POST", name="form")
+	form.dropzone(action="/encrypt", id="dropper" method="POST", name="form")
 		.dropzone-previews
 		div.box(style="float: left;")
 			b Create Key      
@@ -68,7 +61,7 @@ block content
 		
 		.progress{
 			position: absolute;
-			left: 40%;
+			left: 30%
 			
 			top: 92%;
 			width: 20%
@@ -101,7 +94,7 @@ block content
 			position: absolute;
 			border-radius: 10px;
 			text-align: left;
-			padding: 10%;
+			padding: 200px;
 
 			border: 2px dashed #BBB;
 			color: #BBB;

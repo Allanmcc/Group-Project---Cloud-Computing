@@ -1,12 +1,30 @@
 doctype html
 html
+	style.
+		.bg-image{
+			opacity: 1;
+		}
 	head
 		title=title
-		link(rel='stylesheet', href='/stylesheets/style.css')
+		
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		link(href="/css/bootstrap.min.css" rel="stylesheet")
+		link(href="/css/signin.css", rel="stylesheet")
+		link(href="/css/dashboard.css", rel="stylesheet")
 		script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js")
 		
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js")
 		
-		script(src="/javascripts/controller.js")
+		script( src='/js/bootstrap.min.js')
+
+		script.
+			window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
+		.bg-image(align="center")
+			img(src="/mainCloudComputing.png" align="middle")
+		
+		
 	body
+
 		block content

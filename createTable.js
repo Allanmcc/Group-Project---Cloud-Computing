@@ -6,7 +6,7 @@ AWS.config.update({
 });
 
 var dynamodb = new AWS.DynamoDB();
-/*
+
 var params = {
 	TableName : "UserTable",
 	KeySchema:[
@@ -30,7 +30,7 @@ dynamodb.createTable(params, function(err, data) {
 });
 
 
-var params = {
+var params2 = {
 	TableName : "EmailTable",
 	KeySchema:[
 		{AttributeName: "email", KeyType: "HASH"}
@@ -45,7 +45,7 @@ var params = {
 };
 
 
-dynamodb.createTable(params, function(err, data) {
+dynamodb.createTable(params2, function(err, data) {
     if (err) {
         console.error("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
     } else {
@@ -54,7 +54,7 @@ dynamodb.createTable(params, function(err, data) {
 });
 
 
-var params = {
+var params3 = {
 	TableName : "AtomicCounters",
 	KeySchema:[
 		{AttributeName: "id", KeyType: "HASH"}
@@ -68,32 +68,34 @@ var params = {
 	}
 };
 
-dynamodb.createTable(params, function(err, data) {
+dynamodb.createTable(params3, function(err, data) {
     if (err) {
         console.error("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
     } else {
-        console.log("Created table. Table description JSON:", JSON.stringify(data, null, 2));
+        var doc = new AWS.DynamoDB.DocumentClient();
+		var table = "AtomicCounters";
+		var id = "counter";
+		var params4 = {
+			TableName: table,
+			Item:{
+				"id": id,
+				"count":0
+			}
+		};
+		
+		
+		doc.put(params, function(err, data){
+			if (err){
+				console.log("error: ",JSON.stringify(err,null,2));
+			}
+			else{
+				console.log("Added item:", JSON.stringify(data,null,2));
+			}
+		});
+
+
     }
 });
-*/
-var doc = new AWS.DynamoDB.DocumentClient();
-var table = "AtomicCounters";
-var id = "counter";
-var params = {
-	TableName: table,
-	Item:{
-		"id": id,
-		"count":0
-	}
-};
 
-doc.put(params, function(err, data){
-	if (err){
-		console.log("error: ",JSON.stringify(err,null,2));
-	}
-	else{
-		console.log("Added item:", JSON.stringify(data,null,2));
-	}
-});
 
 

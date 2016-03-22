@@ -3,148 +3,29 @@ extends layout
 block content
 	html
 	
-		head
-			script.
-				function setField(s){
-					
-					var field = document.getElementById("textField");
-					field.setAttribute("value", s);
-				}
-			script.
-				$(document).ready(function () {
-					console.log("test");
-					var h = Object.keys(t).length
-					
-					$('form').css({"height":h*50+75});
-				});
-				var t = !{JSON.stringify(files)};
-		
 		body
-			div#banner
-				div#banner-content
-					p SecureMe
-					
+			include banner_in
+			include sidebar
+			.error
+				if (prompt=="true")
+					.alert.alert-success #{message}
+						
 
-			br
-			a(href="/upload_file") Upload File
-			br
-			br
-			br
-			br
-			br
-			br
-			br
-			br
-		div#main-content
-			form(name="form", action="/file", method="GET")
-				input(type="text", hidden="true", value="",name="f" id="textField")
-				each file, i in files
-					input(type="radio" name="radio" onclick="setField('"+file.file_name+"')") 
-					|#{file.file_name}
-					br
-				br
-				input(type="submit", class="submit_button", value="View File")
-			
-
-			
-	style.
-		* {
-			margin: 0; 
-			padding: 0;
-		}
-
-		div#banner { 
-		    position: absolute; 
-		    top: 0; 
-		    left: 0; 
-		    background-color: #43c0fa; 
-			width: 100%;
-		}
-		div#banner-content {   
-			font-family:'Helvetica Neue', sans-serif;
-			font-size: 24px;
-			font-weight: bold;
-			color: #FFF;
-			width: auto; 
-			margin: 0 auto; 
-			padding: 10px;
-		}
-		 div#main-content { 
-		   padding-top: 70px;
-		}
-		html {
-			background-image: url('mainCloudComputing.png');
-			background-size: 600px 350px;
-			background-repeat: no-repeat;
-			background-position: 50% 100%;
-			font-size: 30pt;
+			.stats.h1
+				b Statistics
 	
+	style.
+		.stats{
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, 0%);
 		}
-		form {
-		  background: -webkit-linear-gradient(bottom, #CCFFFF, #1C6BA0 175px);
-		  background: -moz-linear-gradient(bottom, #CCFFFF, #1C6BA0 175px);
-		  background: linear-gradient(bottom, #CCFFFF, #1C6BA0 175px);
-		  border: 1px solid #c6c7cc;
-		  border-radius: 5px;
-			margin: auto;
-		  position: absolute;
+		.error{
+			position: absolute;
+			left: 50%;
 			top: 40%;
-			left: 25%;
-			left: 25%;
-		  width: 660px;
-		  height: 160px;
-		  font-family: Tahoma, Geneva, sans-serif;
-		  font-size: 20px;
-		  line-height: 36px;
-		  font-weight: bold;
-		  color: #FFF;
-			padding: 20px;
-		  text-decoration: none;
-			text-align: center;
-		  border-radius: 10px;
-		  border: 1px solid #999;
-		  border: inset 1px solid #333;
-		  -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
-		  -moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
-		  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+			transform: translate(-50%, 0%);
+			width: 20%;
+		
 		}
-		.submit_button {
-			background: #25A6E1;
-			background: -moz-linear-gradient(top,#25A6E1 0%,#188BC0 100%);
-			background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#25A6E1),color-stop(100%,#188BC0));
-			background: -webkit-linear-gradient(top,#25A6E1 0%,#188BC0 100%);
-			background: -o-linear-gradient(top,#25A6E1 0%,#188BC0 100%);
-			background: -ms-linear-gradient(top,#25A6E1 0%,#188BC0 100%);
-			background: linear-gradient(top,#25A6E1 0%,#188BC0 100%);
-			filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#25A6E1',endColorstr='#188BC0',GradientType=0);
-			margin: 10 auto;
-			padding:8px 13px;
-			color:#fff;
-			font-family:'Helvetica Neue',sans-serif;
-			font-size:17px;
-			font-weight: bold;
-			border-radius:4px;
-			-moz-border-radius:4px;
-			-webkit-border-radius:4px;
-			border:1px solid #1A87B9
-		}  
-		#customers {
-			font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-			border-collapse: collapse;
-			width: 100%;
-		}
-		#customers td, #customers th {
-			border: 1px solid #ddd;
-			text-align: left;
-			padding: 8px;
-		}
-		#customers tr{background-color: #f2f2f2}
-		#customers tr:hover {background-color: #ddd;}
-		#customers th {
-			padding-top: 12px;
-			padding-bottom: 12px;
-			background-color: #43c0fa;
-			color: white;
-		}
-
-

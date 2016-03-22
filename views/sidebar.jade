@@ -1,0 +1,43 @@
+.container-fluid
+	.row
+		.col-sm-3.col-md-2.sidebar
+			ul.nav.nav-sidebar
+				if selected == "files"
+					li.active: a(href="/user?section=files") 
+						h3 Files
+						ul.nav.nav-stacked
+							each file, i in files
+								li: a(href="/file?f="+file.file_name) #{file.file_name}
+				else
+					li
+						a(href="/user?section=files") 
+							h3 Files
+
+	
+						
+
+					
+
+			ul.nav.nav-sidebar
+				if selected == "share"
+					li.active: a(href="/user?section=share") 
+						h3 Shared
+						ul.nav.nav-stacked
+							each file, i in files
+								li: a(href="/shared_file?f="+file.file_name) #{file.file_name}
+				else
+					li
+						a(href="/user?section=share")
+							h3 Shared
+
+			ul.nav.nav-sidebar
+				if selected == "more"
+					li.active: a(href="/user?section=more") 
+						h3 More
+						ul.nav.nav-stacked
+							each file, i in files
+								li: a(href="/more/"+file.file_name) #{file.file_name}
+				else
+					li
+						a(href="./user?section=more") 
+							h3 More

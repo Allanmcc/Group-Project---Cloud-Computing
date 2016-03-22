@@ -1,0 +1,51 @@
+extends layout
+
+block content
+	head
+	
+		
+
+		script(src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js")
+
+		
+
+
+	include banner_in
+	include sidebar
+
+	.content
+		form.form-group(action="/text_upload" name="form" method="POST")
+			label
+				input.form-control(type="text" name="filename" placeholder="File Name" required)
+			textarea.form-control(rows="10" name="content" required)
+			.button
+				button.btn.btn-primary.btn-lg(type="submit")
+					b Upload
+	style. 
+		* {
+			margin: 0; 
+			padding: 0;
+		}
+		
+		.title{
+			position: absolute;
+			top: 35%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+		
+		}
+		.content{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 40%;
+			height: 20%;
+			transform: translate(-50%,-50%);
+		
+		}
+		.button{
+			padding: 1%;
+			position: absolute;
+			left: 50%;
+			transform: translate(-50%,0%);
+		}

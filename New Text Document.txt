@@ -1,0 +1,9 @@
+Stop Sharing file
+Owner of file deletes file being shared
+2 files of same name shared to someone
+
+Person recieving file "deletes" it
+
+Share-View
+Share-Raw-Download
+Share-Raw-View

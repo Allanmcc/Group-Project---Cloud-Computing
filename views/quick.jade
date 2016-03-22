@@ -1,0 +1,45 @@
+extends layout
+
+block content
+	body
+		if (logged_in == "true")
+			include banner_in
+			include sidebar
+		else
+			include banner_out
+		
+	.content
+		.h1
+			b= file_name
+			
+		form(name="form", action="/quick_download?f="+address, method="POST")
+			.btn-group-lg(role="group" aria-label="...")
+				if (gen == 'f')
+					input.form-control(type="text", name="key" id="key_text_field" placeholder = "key")
+				button.btn.btn-default(type="submit")
+					b Download
+				button.btn.btn-default(type="submit" onclick='form.action="/quick_view?f='+address+'"; form.method="POST"; return true;')
+					b View
+				span.btn-group-lg(role="group")
+					button.btn.btn-default.dropdown-toggle(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+						b Raw 
+						span.caret
+					ul.dropdown-menu.dropdown-menu-right
+						
+						button.btn.btn-default.dropdown-toggle(type="submit" onclick='form.action="/quick_download_raw?f='+address+'"; form.method="POST"; return true;')
+							b Download Raw
+						
+						button.btn.btn-default.dropdown-toggle(type="submit" onclick='form.action="/quick_view_raw?f='+address+'"; form.method="POST"; return true;')
+							b View Raw
+
+			
+	style.
+
+		.content{
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		
+		}
+

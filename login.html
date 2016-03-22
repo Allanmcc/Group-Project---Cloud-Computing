@@ -16,7 +16,7 @@
     <form novalidate name="form" class="simple-form" action="/login_request" method="POST">
         <ul>
             <label for="email">Email: </label><input type="text" ng-model="user.username" name="email" />
-            <label for="passw">Password: </label><input type="text" ng-model="user.password" name="password"/>
+            <label for="passw">Password: </label><input type="password" ng-model="user.password" name="password"/>
             <div style="text-align:center;">
                 <input type="submit" ng-click="register()" onclick="form.action='/signup_request'; return true;" class="register_button" value="Register" />
                 <input type="submit" class="login_button" ng-click="login(user)" value="Login" />

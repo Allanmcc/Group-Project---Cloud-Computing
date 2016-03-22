@@ -1,12 +1,14 @@
 $(document).ready(function () {
 
-	$('div[id^="key"]').hide();
-
-	$("input[type='radio']").on( "click", function() {
-	  if($("input[value='no']").is(':checked')) {
-		  $('div[id^="key"]').show();
+	$('div[id^="key_text"]').hide();
+	$('div[id^="bar"]').hide();
+	$("input[type='checkbox']").on( "click", function() {
+	  if($("input[value='check']").is(':checked')) {
+		  $('div[id^="key_text"]').show();
+		  $('input[id^="key_text_field"]').attr('required','');
 	  } else {
-		  $('div[id^="key"]').hide();
+		  $('div[id^="key_text"]').hide();
+		  $('input[id^="key_text_field"]').removeAttr('required');
 	  }
 	});
 });
